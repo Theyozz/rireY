@@ -46,7 +46,7 @@ export default function Home() {
       const { data: { publicUrl } } = supabase.storage.from('Rires').getPublicUrl(fileName);
 
       // Ajouter dans la DB
-      const { error: dbError } = await supabase.from('rireY').insert([
+      const { error: dbError } = await supabase.from('rires').insert([
         { name: file.name.replace(/\.(mp3|m4a)$/i, ''), url: publicUrl }
       ]);
       if (dbError) console.error(dbError);
