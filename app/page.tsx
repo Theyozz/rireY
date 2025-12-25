@@ -25,7 +25,7 @@ export default function Home() {
     else setTracks(data.map(track => ({ ...track, url: track.url })));
   };
 
-  const handleDrop = async (e) => {
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
 
     const files = Array.from(e.dataTransfer.files).filter(file =>
@@ -54,9 +54,9 @@ export default function Home() {
     fetchTracks();
   };
 
-  const handleDragOver = (e) => e.preventDefault();
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>)  => e.preventDefault();
 
-  const playTrack = (track) => {
+  const playTrack = (track: Track) => {
     setCurrentTrack(track);
     if (audioRef.current) {
       audioRef.current.src = track.url;
