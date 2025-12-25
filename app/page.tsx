@@ -36,14 +36,14 @@ export default function Home() {
       const fileName = `${Date.now()}-${file.name}`;
 
       // Upload vers Supabase Storage
-      const { error: uploadError } = await supabase.storage.from('rires').upload(fileName, file);
+      const { error: uploadError } = await supabase.storage.from('Rires').upload(fileName, file);
       if (uploadError) {
         console.error(uploadError);
         continue;
       }
 
       // Récupérer l'URL publique
-      const { data: { publicUrl } } = supabase.storage.from('rires').getPublicUrl(fileName);
+      const { data: { publicUrl } } = supabase.storage.from('Rires').getPublicUrl(fileName);
 
       // Ajouter dans la DB
       const { error: dbError } = await supabase.from('rires').insert([
@@ -67,7 +67,7 @@ export default function Home() {
 
   const deleteTrack = async (track: Track) => {
     const path = track.url.split('/').pop()!;
-    await supabase.storage.from('rires').remove([path]);
+    await supabase.storage.from('Rires').remove([path]);
     await supabase.from('rires').delete().eq('id', track.id);
     setTracks(tracks.filter(t => t.id !== track.id));
     if (currentTrack?.id === track.id) {
