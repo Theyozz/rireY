@@ -1,12 +1,18 @@
-"use client";
+'use client';
 
 import { useState, useEffect, useRef } from "react";
 import { supabase } from '../lib/supabaseClient';
 
+interface Track {
+  id: string;
+  name: string;
+  url: string;
+}
+
 export default function Home() {
-  const [tracks, setTracks] = useState([]);
-  const [currentTrack, setCurrentTrack] = useState(null);
-  const audioRef = useRef(null);
+  const [tracks, setTracks] = useState<Track[]>([]);
+  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Charger les pistes depuis Supabase au démarrage
