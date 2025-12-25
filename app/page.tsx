@@ -15,7 +15,6 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Charger les pistes depuis Supabase au démarrage
     fetchTracks();
   }, []);
 
@@ -23,6 +22,37 @@ export default function Home() {
     const { data, error } = await supabase.from('rires').select('*').order('inserted_at', { ascending: true });
     if (error) console.error(error);
     else setTracks(data.map(track => ({ ...track, url: track.url })));
+  };
+
+  // Fonction pour uploader un fichier via l'input
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    for (const file of Array.from(files)) {
+      if (!['audio/mpeg', 'audio/mp4'].includes(file.type)) continue;
+
+      const fileName = `${Date.now()}-${file.name}`;
+
+      // Upload vers Supabase Storage
+      const { error: uploadError } = await supabase.storage.from('rires').upload(fileName, file);
+      if (uploadError) {
+        console.error(uploadError);
+        continue;
+      }
+
+      // Récupérer l'URL publique
+      const { data: { publicUrl } } = supabase.storage.from('rires').getPublicUrl(fileName);
+
+      // Ajouter dans la DB
+      const { error: dbError } = await supabase.from('rires').insert([
+        { name: file.name.replace(/\.(mp3|m4a)$/i, ''), url: publicUrl }
+      ]);
+      if (dbError) console.error(dbError);
+    }
+
+    // Rafraîchir la liste
+    fetchTracks();
   };
 
   const playTrack = (track: Track) => {
@@ -58,6 +88,15 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-6 bg-gradient-to-b from-pink-100 to-pink-300">
       <h1 className="text-4xl font-bold mb-6 text-pink-800">Les rires de Yasmine</h1>
+
+      {/* Input pour ajouter un fichier */}
+      <input
+        type="file"
+        accept=".mp3,.m4a"
+        onChange={handleFileUpload}
+        className="mb-6"
+        multiple
+      />
 
       <ul className="w-full max-w-xl space-y-2">
         {tracks.map((track) => (
