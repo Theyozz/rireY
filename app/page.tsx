@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-6 bg-gradient-to-b from-pink-100 to-pink-300">
-      <h1 className="text-4xl font-bold mb-6 text-pink-800">Les rires de Yasminee</h1>
+      <h1 className="text-4xl font-bold mb-6 text-pink-800">Les rires de Yasmine</h1>
 
       <ul className="w-full max-w-xl space-y-2">
         {tracks.map((track) => (
