@@ -64,23 +64,18 @@ export default function Home() {
     }
   };
 
-  const deleteTrack = async (track) => {
-    // Supprimer de Supabase Storage
-    const path = track.url.split('/').pop();
-    await supabase.storage.from('rires').remove([path]);
+  const deleteTrack = async (track: Track) => {
+  const path = track.url.split('/').pop()!;
+  await supabase.storage.from('rires').remove([path]);
+  await supabase.from('rires').delete().eq('id', track.id);
+  setTracks(tracks.filter(t => t.id !== track.id));
+  if (currentTrack?.id === track.id) {
+    audioRef.current?.pause();
+    setCurrentTrack(null);
+  }
+};
 
-    // Supprimer de la DB
-    await supabase.from('rires').delete().eq('id', track.id);
-
-    // Mettre à jour la liste
-    setTracks(tracks.filter(t => t.id !== track.id));
-    if (currentTrack && currentTrack.id === track.id) {
-      audioRef.current.pause();
-      setCurrentTrack(null);
-    }
-  };
-
-  const renameTrack = async (track) => {
+  const renameTrack = async (track: Track) => {
     const newName = prompt("Nouveau nom de la piste :", track.name);
     if (!newName) return;
 
