@@ -62,7 +62,7 @@ export default function Home() {
       <ul className="w-full max-w-xl space-y-2">
         {tracks.map((track) => (
           <li key={track.id} className="flex justify-between items-center bg-white rounded-xl p-4 shadow">
-            <span className="font-medium text-black">{track.name}t</span>
+            <span className="font-medium text-black">{track.name}</span>
             <div className="flex gap-2">
               <button
                 onClick={() => playTrack(track)}
