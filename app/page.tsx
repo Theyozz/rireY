@@ -70,7 +70,7 @@ export default function Home() {
               >
                 ▶ Écouter
               </button>
-              <button
+              {/* <button
                 onClick={() => renameTrack(track)}
                 className="px-3 py-2 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500"
               >
@@ -81,7 +81,7 @@ export default function Home() {
                 className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
               >
                 🗑️ Supprimer
-              </button>
+              </button> */}
             </div>
           </li>
         ))}

@@ -1,0 +1,2 @@
+insert into rires (name, url) values 
+('test m4a', 'https://wlezxnootnpofkdzxmal.supabase.co/storage/v1/object/public/Rires/20251225-80151%20PM.m4a');
