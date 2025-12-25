@@ -24,14 +24,15 @@ export default function Home() {
     else setTracks(data.map(track => ({ ...track, url: track.url })));
   };
 
-  // Fonction pour uploader un fichier via l'input
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+  // Drag & drop upload
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
 
-    for (const file of Array.from(files)) {
-      if (!['audio/mpeg', 'audio/mp4'].includes(file.type)) continue;
+    const files = Array.from(e.dataTransfer.files).filter(file =>
+      file.type === "audio/mpeg" || file.type === "audio/mp4"
+    );
 
+    for (const file of files) {
       const fileName = `${Date.now()}-${file.name}`;
 
       // Upload vers Supabase Storage
@@ -51,9 +52,10 @@ export default function Home() {
       if (dbError) console.error(dbError);
     }
 
-    // Rafraîchir la liste
     fetchTracks();
   };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 
   const playTrack = (track: Track) => {
     setCurrentTrack(track);
@@ -89,14 +91,13 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center justify-start p-6 bg-gradient-to-b from-pink-100 to-pink-300">
       <h1 className="text-4xl font-bold mb-6 text-pink-800">Les rires de Yasmine</h1>
 
-      {/* Input pour ajouter un fichier */}
-      <input
-        type="file"
-        accept=".mp3,.m4a"
-        onChange={handleFileUpload}
-        className="mb-6"
-        multiple
-      />
+      <div
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        className="w-full max-w-xl h-32 border-4 border-dashed border-pink-600 rounded-xl flex items-center justify-center text-pink-800 font-semibold bg-white mb-6"
+      >
+        Glisse ici tes pistes MP3 ou M4A 🎵
+      </div>
 
       <ul className="w-full max-w-xl space-y-2">
         {tracks.map((track) => (
