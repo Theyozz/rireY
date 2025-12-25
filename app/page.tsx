@@ -15,6 +15,7 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    // Charger les pistes depuis Supabase au démarrage
     fetchTracks();
   }, []);
 
@@ -23,39 +24,6 @@ export default function Home() {
     if (error) console.error(error);
     else setTracks(data.map(track => ({ ...track, url: track.url })));
   };
-
-  // Drag & drop upload
-  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-
-    const files = Array.from(e.dataTransfer.files).filter(file =>
-      file.type === "audio/mpeg" || file.type === "audio/mp4"
-    );
-
-    for (const file of files) {
-      const fileName = `${Date.now()}-${file.name}`;
-
-      // Upload vers Supabase Storage
-      const { error: uploadError } = await supabase.storage.from('Rires').upload(fileName, file);
-      if (uploadError) {
-        console.error(uploadError);
-        continue;
-      }
-
-      // Récupérer l'URL publique
-      const { data: { publicUrl } } = supabase.storage.from('Rires').getPublicUrl(fileName);
-
-      // Ajouter dans la DB
-      const { error: dbError } = await supabase.from('rires').insert([
-        { name: file.name.replace(/\.(mp3|m4a)$/i, ''), url: publicUrl }
-      ]);
-      if (dbError) console.error(dbError);
-    }
-
-    fetchTracks();
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 
   const playTrack = (track: Track) => {
     setCurrentTrack(track);
@@ -67,7 +35,7 @@ export default function Home() {
 
   const deleteTrack = async (track: Track) => {
     const path = track.url.split('/').pop()!;
-    await supabase.storage.from('Rires').remove([path]);
+    await supabase.storage.from('rires').remove([path]);
     await supabase.from('rires').delete().eq('id', track.id);
     setTracks(tracks.filter(t => t.id !== track.id));
     if (currentTrack?.id === track.id) {
@@ -90,15 +58,6 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-6 bg-gradient-to-b from-pink-100 to-pink-300">
       <h1 className="text-4xl font-bold mb-6 text-pink-800">Les rires de Yasmine</h1>
-        {/*
-          <div
-            onDrop={handleDrop}           // Appelé quand un fichier est lâché dans l'encadré
-            onDragOver={handleDragOver}   // Empêche le comportement par défaut du navigateur (nécessaire pour drop)
-            className="w-full max-w-xl h-32 border-4 border-dashed border-pink-600 rounded-xl flex items-center justify-center text-pink-800 font-semibold bg-white mb-6"
-          >
-            Glisse ici tes pistes MP3 ou M4A 🎵
-          </div>
-          */}
 
       <ul className="w-full max-w-xl space-y-2">
         {tracks.map((track) => (
