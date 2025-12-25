@@ -90,14 +90,15 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-6 bg-gradient-to-b from-pink-100 to-pink-300">
       <h1 className="text-4xl font-bold mb-6 text-pink-800">Les rires de Yasmine</h1>
-
-      <div
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        className="w-full max-w-xl h-32 border-4 border-dashed border-pink-600 rounded-xl flex items-center justify-center text-pink-800 font-semibold bg-white mb-6"
-      >
-        Glisse ici tes pistes MP3 ou M4A 🎵
-      </div>
+        {/*
+          <div
+            onDrop={handleDrop}           // Appelé quand un fichier est lâché dans l'encadré
+            onDragOver={handleDragOver}   // Empêche le comportement par défaut du navigateur (nécessaire pour drop)
+            className="w-full max-w-xl h-32 border-4 border-dashed border-pink-600 rounded-xl flex items-center justify-center text-pink-800 font-semibold bg-white mb-6"
+          >
+            Glisse ici tes pistes MP3 ou M4A 🎵
+          </div>
+          */}
 
       <ul className="w-full max-w-xl space-y-2">
         {tracks.map((track) => (
