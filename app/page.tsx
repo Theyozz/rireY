@@ -60,7 +60,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-6 text-pink-800">Les rires de Yasmine</h1>
 
       {tracks.length === 0 ? (
-        <p className="text-pink-700 text-lg">Aucun sons ajouté pour le moment, yasmine bouge ton gros cul</p>
+        <p className="text-pink-700 text-lg">Aucun son ajouté pour le moment, yasmine bouge ton gros cul</p>
       ) : (
         <ul className="w-full max-w-xl space-y-2">
           {tracks.map((track) => (
