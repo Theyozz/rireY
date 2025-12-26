@@ -59,33 +59,37 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center justify-start p-6 bg-gradient-to-b from-pink-100 to-pink-300">
       <h1 className="text-4xl font-bold mb-6 text-pink-800">Les rires de Yasmine</h1>
 
-      <ul className="w-full max-w-xl space-y-2">
-        {tracks.map((track) => (
-          <li key={track.id} className="flex justify-between items-center bg-white rounded-xl p-4 shadow">
-            <span className="font-medium text-black">{track.name}</span>
-            <div className="flex gap-2">
-              <button
-                onClick={() => playTrack(track)}
-                className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
-              >
-                ▶ Écouter
-              </button>
-              {/* <button
-                onClick={() => renameTrack(track)}
-                className="px-3 py-2 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500"
-              >
-                ✏️ Renommer
-              </button>
-              <button
-                onClick={() => deleteTrack(track)}
-                className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-              >
-                🗑️ Supprimer
-              </button> */}
-            </div>
-          </li>
-        ))}
-      </ul>
+      {tracks.length === 0 ? (
+        <p className="text-pink-700 text-lg">Aucun son ajouté pour le moment, yasmine bouge ton gros cul</p>
+      ) : (
+        <ul className="w-full max-w-xl space-y-2">
+          {tracks.map((track) => (
+            <li key={track.id} className="flex justify-between items-center bg-white rounded-xl p-4 shadow">
+              <span className="font-medium text-black">{track.name}</span>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => playTrack(track)}
+                  className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
+                >
+                  ▶ Écouter
+                </button>
+                {/* <button
+                  onClick={() => renameTrack(track)}
+                  className="px-3 py-2 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500"
+                >
+                  ✏️ Renommer
+                </button>
+                <button
+                  onClick={() => deleteTrack(track)}
+                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                >
+                  🗑️ Supprimer
+                </button> */}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <audio ref={audioRef} controls className="mt-6 w-full max-w-xl" />
     </main>
