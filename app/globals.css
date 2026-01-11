@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Palette années 70 psychédélique */
+  --groovy-orange: #FF6B35;
+  --sunset-red: #F7931E;
+  --mustard-yellow: #F9C74F;
+  --earth-brown: #A0522D;
+  --vintage-purple: #9D4EDD;
+  --psychedelic-pink: #FF006E;
+  --retro-teal: #06FFA5;
+  --cream: #FFF8E7;
+  --dark-chocolate: #3E2723;
+
+  --background: #FFF8E7;
+  --foreground: #3E2723;
+  --accent-gradient: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #F9C74F 50%, #9D4EDD 75%, #FF006E 100%);
 }
 
 @theme inline {
@@ -14,13 +26,237 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a1310;
+    --foreground: #FFF8E7;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-fredoka), 'Comic Sans MS', cursive, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Animations psychédéliques */
+@keyframes groovy-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes wave-motion {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes rotate-rainbow {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Effet de dégradé animé en arrière-plan */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animation arc-en-ciel vague */
+@keyframes rainbow-wave {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Formes organiques ondulées en arrière-plan */
+.retro-wave-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(-45deg,
+      #FFF8E7 0%,
+      #FFE5B4 10%,
+      rgba(255, 107, 53, 0.3) 15%,
+      rgba(247, 147, 30, 0.3) 20%,
+      rgba(249, 199, 79, 0.3) 25%,
+      rgba(6, 255, 165, 0.3) 30%,
+      rgba(157, 78, 221, 0.3) 35%,
+      rgba(255, 0, 110, 0.3) 40%,
+      #FFDAB9 45%,
+      #FFE4E1 55%,
+      rgba(255, 0, 110, 0.3) 60%,
+      rgba(157, 78, 221, 0.3) 65%,
+      rgba(6, 255, 165, 0.3) 70%,
+      rgba(249, 199, 79, 0.3) 75%,
+      rgba(247, 147, 30, 0.3) 80%,
+      rgba(255, 107, 53, 0.3) 85%,
+      #FFE5B4 90%,
+      #FFF8E7 100%);
+  background-size: 400% 400%;
+  animation: rainbow-wave 12s ease infinite;
+  overflow: hidden;
+}
+
+/* Cercles décoratifs psychédéliques */
+.psychedelic-circles {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.psychedelic-circles::before,
+.psychedelic-circles::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+}
+
+.psychedelic-circles::before {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--groovy-orange), transparent 70%);
+  top: -300px;
+  right: -200px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.psychedelic-circles::after {
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, var(--vintage-purple), transparent 70%);
+  bottom: -400px;
+  left: -300px;
+  animation: float 12s ease-in-out infinite reverse;
+}
+
+/* Styles pour textes groovy */
+.groovy-text {
+  font-family: var(--font-righteous), cursive;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: gradient-shift 3s linear infinite;
+}
+
+/* Boutons style années 70 */
+.retro-button {
+  position: relative;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.retro-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.retro-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+/* Cartes avec effet groovy */
+.groovy-card {
+  position: relative;
+  border: 3px solid var(--dark-chocolate);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 248, 231, 0.9) 0%, rgba(255, 229, 180, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  box-shadow:
+    8px 8px 0px rgba(255, 107, 53, 0.3),
+    -2px -2px 0px rgba(157, 78, 221, 0.2);
+}
+
+.groovy-card:hover {
+  transform: translateY(-5px) rotate(-1deg);
+  box-shadow:
+    12px 12px 0px rgba(255, 107, 53, 0.4),
+    -3px -3px 0px rgba(157, 78, 221, 0.3);
+}
+
+/* Effet ondulé pour les bordures */
+.wavy-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.wavy-border::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 107, 53, 0.1) 10px,
+      rgba(255, 107, 53, 0.1) 20px);
+  animation: wave-motion 20s linear infinite;
+  pointer-events: none;
+}
+
+/* Player audio customisé style vintage */
+audio {
+  filter: sepia(0.3) saturate(1.2);
+  border-radius: 15px;
+  border: 3px solid var(--earth-brown);
 }
